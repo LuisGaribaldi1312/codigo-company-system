@@ -1,0 +1,181 @@
+/* ============================================================
+   CÓDIGO COMPANY - ESTILOS RESPONSIVE
+   ============================================================ */
+
+/* Mobile First */
+
+/* Mobile */
+@media (max-width: 768px) {
+  .row {
+    flex-direction: column;
+  }
+  
+  .col {
+    flex: 1;
+    max-width: 100%;
+    padding: 0 var(--spacing-sm);
+  }
+  
+  .col-md-3, .col-md-4, .col-md-6, .col-md-8 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .col-md-offset-2 {
+    margin-left: 0;
+  }
+  
+  .hero-title {
+    font-size: var(--font-size-xxl);
+  }
+  
+  .hero-subtitle {
+    font-size: var(--font-size-md);
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .nav-list {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 280px;
+    background: var(--color-negro);
+    flex-direction: column;
+    align-items: center;
+    padding-top: 60px;
+    gap: 2rem;
+    transition: right 0.3s ease;
+    z-index: 99;
+  }
+  
+  .nav-list.active {
+    right: 0;
+  }
+  
+  .nav-link {
+    color: var(--color-crema-claro);
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-md) 0;
+  }
+  
+  .nav-link.btn-whatsapp {
+    position: relative;
+    margin-top: var(--spacing-xl);
+  }
+  
+  .nav-toggle {
+    display: flex;
+  }
+  
+  .section-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cotizacion-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .form-group {
+    min-width: 100%;
+  }
+  
+  .contact-info {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .whatsapp-float {
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    width: 50px;
+    height: 50px;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-title {
+    font-size: var(--font-size-xxl);
+  }
+  
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .plagas-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .footer .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  
+  .footer > div {
+    flex: 1;
+    min-width: 200px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1025px) {
+  .plagas-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Large Desktop */
+@media (min-width: 1200px) {
+  .plagas-grid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+  
+  .section {
+    padding: var(--spacing-xxl) 0;
+  }
+}
+
+/* Dark mode (preferencia del sistema) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--color-crema-muy-claro);
+    color: var(--color-negro);
+  }
+  
+  .footer {
+    background: var(--color-negro);
+    color: var(--color-crema-claro);
+  }
+}
+
+/* Impresión */
+@media print {
+  .header,
+  .footer,
+  .whatsapp-float,
+  .nav-toggle {
+    display: none;
+  }
+  
+  .section {
+    padding: 0;
+  }
+}
