@@ -130,10 +130,21 @@ const login = async (req, res) => {
             [refreshToken, new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), usuario.id]
         );
 
-        res.json({
+                res.json({
             success: true,
             message: 'Inicio de sesión exitoso',
             data: {
+                user: { id: usuario.id, nombre: usuario.nombre, email: usuario.email, rol: usuario.rol_nombre },
+                accessToken,
+                refreshToken,
+                expiresIn: '24h'
+            }
+        });
+    } catch (error) {
+        console.error('Error en login:', error);
+        res.status(500).json({ success: false, message: 'Error interno' });
+    }
+};
 
 // ============================================================
 // Refrescar token
@@ -164,7 +175,7 @@ const refreshTokenCtrl = async (req, res) => {
         await db.query(
             'UPDATE usuarios SET token_refresh = $1, token_refresh_expira = $2 WHERE id = $3',
             [newRefreshToken, new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), usuario.id]
-        );
+                );
 
         res.json({ success: true, message: 'Token renovado', data: { accessToken, refreshToken: newRefreshToken, expiresIn: '24h' } });
     } catch (error) {
@@ -172,14 +183,6 @@ const refreshTokenCtrl = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error interno' });
     }
 };
-
-                user: { id: usuario.id, nombre: usuario.nombre, email: usuario.email, rol: usuario.rol_nombre },
-                accessToken,
-                refreshToken,
-                expiresIn: '24h'
-            }
-        });
-    } catch (error) {
 
 // ============================================================
 // Cerrar sesión
@@ -224,6 +227,14 @@ const changePassword = async (req, res) => {
         const result = await db.query('SELECT password_hash FROM usuarios WHERE id = $1', [req.user.id]);
         const passwordValid = await bcrypt.compare(currentPassword, result.rows[0].password_hash);
         if (!passwordValid) return res.status(401).json({ success: false, message: 'Contraseña incorrecta' });
+
+        await db.query('UPDATE usuarios SET password_hash = $1 WHERE id = $2', [await bcrypt.hash(newPassword, saltRounds), req.user.id]);
+                res.json({ success: true, message: 'Contraseña actualizada' });
+    } catch (error) {
+        console.error('Error en changePassword:', error);
+        res.status(500).json({ success: false, message: 'Error interno' });
+    }
+};
 
 // ============================================================
 // Recuperación de contraseña
@@ -278,14 +289,4 @@ module.exports = {
     resetPassword
 };
 
-        await db.query('UPDATE usuarios SET password_hash = $1 WHERE id = $2', [await bcrypt.hash(newPassword, saltRounds), req.user.id]);
-        res.json({ success: true, message: 'Contraseña actualizada' });
-    } catch (error) {
-        res.status(500).json({ success: false, message: 'Error interno' });
-    }
-};
-
-        console.error('Error en login:', error);
-        res.status(500).json({ success: false, message: 'Error interno' });
-    }
-};
+/* Fin del archivo */
