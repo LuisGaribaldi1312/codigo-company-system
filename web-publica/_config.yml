@@ -1,0 +1,12 @@
+# GitHub Pages Configuration
+# Esta configuración es para el despliegue de la web pública en GitHub Pages
+
+# Build command (empty = static site)
+build: ""
+
+# Output directory
+publish: "."
+
+# Environment
+env:
+  HUGO_VERSION: "latest"
